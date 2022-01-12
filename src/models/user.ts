@@ -1,17 +1,15 @@
 import Client from '../database';
 
-export type VideoGame = {
+export type User = {
   id: number;
-  title: string;
-  genre: string;
-  price: number;
-  summary: string;
-}; 
+  username: string;
+  password: string;
+  email: string;
+};
 
-export class VideoGameStore {
+export class UserStore {
   // will contain code to get data from the database
   /*
-    Methods
     index
     show 
     create
