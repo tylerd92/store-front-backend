@@ -9,15 +9,6 @@ export type VideoGame = {
 }; 
 
 export class VideoGameStore {
-  // will contain code to get data from the database
-  /*
-    Methods
-    index
-    show 
-    create
-    update
-    delete
-  */
   async index(): Promise<VideoGame[]> {
     try {
       const conn = await Client.connect();
@@ -28,7 +19,7 @@ export class VideoGameStore {
       return result.rows;
       
     } catch(err) {
-      throw new Error(`Could not get video  games. Error: ${err}`);
+      throw new Error(`Could not get video games. Error: ${err}`);
     }
   }
 
@@ -61,7 +52,7 @@ export class VideoGameStore {
 
   async delete(id: String): Promise<VideoGame> {
     try {
-      const sql = 'DELETE FROM videogames WHERE id($1)';
+      const sql = 'DELETE FROM videogames WHERE id=($1)';
       const conn = await Client.connect();
       const result = await conn.query(sql, [id]);
 
