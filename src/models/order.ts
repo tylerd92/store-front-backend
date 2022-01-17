@@ -7,16 +7,6 @@ export type Order = {
 };
 
 export class OrderStore {
-  // will contain code to get data from the database
-  /*
-    Methods
-    index
-    show 
-    create
-    update
-    delete
-  */
-
   async index(): Promise<Order[]> {
     try {
       const conn = await Client.connect();
@@ -57,7 +47,7 @@ export class OrderStore {
     }
   }
 
-  async delete(id: String): Promise<Order> {
+  async delete(id: string): Promise<Order> {
     try {
       const conn = await Client.connect();
       const sql = 'DELETE FROM orders WHERE id=($1)';

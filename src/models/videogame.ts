@@ -50,7 +50,7 @@ export class VideoGameStore {
     }
   }
 
-  async delete(id: String): Promise<VideoGame> {
+  async delete(id: string): Promise<VideoGame> {
     try {
       const sql = 'DELETE FROM videogames WHERE id=($1)';
       const conn = await Client.connect();
