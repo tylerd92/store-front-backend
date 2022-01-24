@@ -19,7 +19,7 @@ export class OrderVideoGameStore {
   async index(): Promise<OrderVideoGame[]> {
     try {
       const conn = await Client.connect();
-      const sql = 'SELECT * order_videogame';
+      const sql = 'SELECT * FROM order_videogame';
       const result = await conn.query(sql);
       conn.release();
       return result.rows;
@@ -43,7 +43,7 @@ export class OrderVideoGameStore {
 
   async create(vo: OrderVideoGame): Promise<OrderVideoGame> {
     try {
-      const sql = 'INSERT INTO order_videogame VALUES ($1, $2, $3) RETURNING *';
+      const sql = 'INSERT INTO order_videogame(quantity, order_id, game_id) VALUES ($1, $2, $3) RETURNING *';
       const conn = await Client.connect();
       const result = await conn.query(sql, [vo.quantity, vo.orderId, vo.gameId]);
       const orderVideo = result.rows[0];
