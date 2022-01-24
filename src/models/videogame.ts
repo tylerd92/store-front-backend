@@ -12,7 +12,7 @@ export class VideoGameStore {
   async index(): Promise<VideoGame[]> {
     try {
       const conn = await Client.connect();
-      const sql = 'SELECT * videogames';
+      const sql = 'SELECT * FROM videogames';
       const result = await conn.query(sql);
 
       conn.release();
