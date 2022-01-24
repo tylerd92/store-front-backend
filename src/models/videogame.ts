@@ -1,10 +1,10 @@
 import Client from '../database';
 
 export type VideoGame = {
-  id: number;
+  id?: number;
   title: string;
   genre: string;
-  price: number;
+  price: number | string;
   summary: string;
 }; 
 
@@ -38,7 +38,7 @@ export class VideoGameStore {
 
   async create(game: VideoGame): Promise<VideoGame> {
     try {
-      const sql = 'INSERT INTO videogames VALUES ($1, $2, $3, $4) RETURNING *';
+      const sql = 'INSERT INTO videogames(title, genre, price, summary) VALUES ($1, $2, $3, $4) RETURNING *';
       const conn = await Client.connect();
       const result = await conn.query(sql, [game.title, game.genre, game.price, game.summary]);
 

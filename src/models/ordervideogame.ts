@@ -1,7 +1,7 @@
 import Client from '../database';
 
 export type OrderVideoGame = {
-  id: number;
+  id?: number;
   quantity: number;
   orderId: number;
   gameId: number;
