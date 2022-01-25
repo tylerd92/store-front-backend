@@ -29,7 +29,9 @@ export class VideoGameStore {
       const sql = 'SELECT * FROM videogames WHERE id=($1)';
       
       const result = await conn.query(sql, [id]);
+      
       conn.release();
+
       return result.rows[0];
     } catch(err) {
       throw new Error(`Could not find video game id: ${id}. Error: ${err}`);
@@ -38,12 +40,12 @@ export class VideoGameStore {
 
   async create(game: VideoGame): Promise<VideoGame> {
     try {
-      const sql = 'INSERT INTO videogames(title, genre, price, summary) VALUES ($1, $2, $3, $4) RETURNING *';
+      const sql = 'INSERT INTO videogames (title, genre, price, summary) VALUES ($1, $2, $3, $4) RETURNING *';
       const conn = await Client.connect();
       const result = await conn.query(sql, [game.title, game.genre, game.price, game.summary]);
-
-      conn.release();
+      
       const videoGame = result.rows[0];
+      conn.release();
       return videoGame;
     } catch(err) {
       throw new Error(`Could not add new video game. Error: ${err}`);
