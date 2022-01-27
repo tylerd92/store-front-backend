@@ -34,11 +34,4 @@ describe('VideoGame Model', () => {
       summary: 'Then, there was fire. Re-experience the critically acclaimed, genre-defining game that started it all.'
     });
   });
-
-  // it('delete method should remove video game', async () => {
-  //   store.delete('1');
-  //   const result = await store.index();
-
-  //   expect(result.length).toBe(0);
-  // });
 });
