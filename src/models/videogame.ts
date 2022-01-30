@@ -51,18 +51,4 @@ export class VideoGameStore {
       throw new Error(`Could not add new video game. Error: ${err}`);
     }
   }
-
-  async delete(id: string): Promise<VideoGame> {
-    try {
-      const sql = 'DELETE FROM videogames WHERE id=($1)';
-      const conn = await Client.connect();
-      const result = await conn.query(sql, [id]);
-
-      const game = result.rows[0];
-      conn.release();
-      return game;
-    } catch(err) {
-      throw new Error(`Could not delete video game ${id}. Error: ${err}`);
-    }
-  }
 };
