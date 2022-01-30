@@ -24,4 +24,9 @@ describe('StoreUser Model', () => {
     const result = await store.index();
     expect(result.length).toBe(1);
   });
+
+  it('show method should get a record', async () => {
+    const result = await store.show('1');
+    expect(result.username).toBe('testUser2');
+  });
 });
