@@ -16,7 +16,7 @@ describe('Order Model', () => {
     //   userId: 1 
     // });
   });
-  describe('create part', () => {
+  describe('create and index part', () => {
     it('create method should create a order', async () => {
       const result = await store.create({
         orderStatus: 'initiated',
@@ -24,5 +24,24 @@ describe('Order Model', () => {
       });
       expect(result.id).toEqual(1);
     });
-  })
+
+    it('index method should get all records', async() => {
+      const result = await store.index();
+      expect(result.length).toBeGreaterThan(0);
+    });
+  });
+
+  // describe('other methods', () => {
+  //   beforeAll(async () => {
+  //     const result = await store.create({
+  //       orderStatus: 'open',
+  //       userId: 1 
+  //     });
+  //     const userResult = await userStore.create({
+  //       username: 'testUser3',
+  //       password: 'pa$$w0rD1236',
+  //       email: 'test23@test.com'
+  //     });
+  //   });
+  // });
 });
