@@ -23,7 +23,7 @@ export class OrderStore {
   async show(id: string): Promise<Order> {
     try {
       const conn = await Client.connect();
-      const sql = 'SELECT * FROM orders WHERE id($1)';
+      const sql = 'SELECT * FROM orders WHERE id=($1)';
 
       const result = await conn.query(sql, [id]);
       conn.release();
@@ -33,14 +33,14 @@ export class OrderStore {
     }
   }
 
-  async showByUserId(id: string): Promise<Order> {
+  async showByUserId(id: string): Promise<Order[]> {
     try {
       const conn = await Client.connect();
       const sql = 'SELECT * FROM orders WHERE store_user_id=($1)';
 
       const result = await conn.query(sql, [id]);
       conn.release();
-      return result.rows[0];
+      return result.rows;
     } catch(err) {
       throw new Error(`Could not find order id: ${id}. Error: ${err}`);
     }
@@ -51,9 +51,9 @@ export class OrderStore {
       const sql = 'INSERT INTO orders(order_status, store_user_id) VALUES ($1, $2) RETURNING *';
       const conn = await Client.connect();
       const result = await conn.query(sql, [order.orderStatus, order.userId]);
-
-      conn.release();
+      
       const o = result.rows[0];
+      conn.release();
       return o;
     } catch(err) {
       throw new Error(`Could not add new order. Error: ${err}`);

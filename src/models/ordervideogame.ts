@@ -47,6 +47,7 @@ export class OrderVideoGameStore {
       const conn = await Client.connect();
       const result = await conn.query(sql, [vo.quantity, vo.orderId, vo.gameId]);
       const orderVideo = result.rows[0];
+      conn.release();
       return orderVideo;
     } catch(err) {
       throw new Error(`Could not add new order video game. Error: ${err}`);
