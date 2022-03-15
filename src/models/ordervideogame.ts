@@ -8,14 +8,6 @@ export type OrderVideoGame = {
 };
 
 export class OrderVideoGameStore {
-  // will contain code to get data from the database
-  /*
-    index
-    show 
-    create
-    update
-    delete
-  */
   async index(): Promise<OrderVideoGame[]> {
     try {
       const conn = await Client.connect();
@@ -31,7 +23,7 @@ export class OrderVideoGameStore {
   async show(id: string): Promise<OrderVideoGame> {
     try {
       const conn = await Client.connect();
-      const sql = 'SELECT * FROM order_videogame WHERE id=($id)';
+      const sql = 'SELECT * FROM order_videogame WHERE id=($1)';
 
       const result = await conn.query(sql, [id]);
       conn.release();
