@@ -9,7 +9,7 @@ const index = async (_req: Request, res: Response) => {
 }
 
 const show = async (req: Request, res: Response) => {
-  const videoGame = await store.show(req.body.id);
+  const videoGame = await store.show(req.params.id);
   res.json(videoGame);
 }
 
@@ -32,7 +32,7 @@ const create = async (req: Request, res: Response) => {
 }
 
 const videoGameRoutes = (app: express.Application) => {
-  app.get('/videogames', index);
+  app.get('/videogames/', index);
   app.get('/videogames/:id', show);
   app.post('/videogames', create);
 }
