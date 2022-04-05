@@ -46,6 +46,19 @@ export class OrderStore {
     }
   }
 
+  async showByStatusUserId(id: string, status: string): Promise<Order[]> {
+    try {
+      const conn = await Client.connect();
+      const sql = 'SELECT * FROM orders WHERE store_user_id=($1) and order_status=($2)';
+
+      const result = await conn.query(sql, [id, status]);
+      conn.release();
+      return result.rows;
+    } catch(err) {
+      throw new Error(`Could not find order id: ${id}. Error: ${err}`);
+    }
+  }
+
   async create(order: Order): Promise<Order> {
     try {
       const sql = 'INSERT INTO orders(order_status, store_user_id) VALUES ($1, $2) RETURNING *';

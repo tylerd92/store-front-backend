@@ -45,6 +45,18 @@ export class OrderVideoGameStore {
       throw new Error(`Could not add new order video game. Error: ${err}`);
     }
   }
+
+  async showByOrderId(id: string): Promise<OrderVideoGame[]> {
+    try {
+      const conn = await Client.connect();
+      const sql = 'SELECT * FROM order_videogame WHERE order_id=($1)';
+      const result = await conn.query(sql, [id]);
+      conn.release();
+      return result.rows;
+    } catch(err) {
+      throw new Error(`Could not find records by order ID: ${id}. Error: ${err}`);
+    }
+  }
   
   async delete(id: string): Promise<OrderVideoGame> {
     try {

@@ -5,11 +5,6 @@ import { OrderVideoGame, OrderVideoGameStore } from '../models/ordervideogame';
 const orderStore = new OrderStore();
 const orderVideoGameStore = new OrderVideoGameStore();
 
-const showByUserId = async (req: Request, res: Response) => {
-  const orders = await orderStore.showByUserId(req.params.userId);
-  res.json(orders);
-}
-
 const create = async (req: Request, res: Response) => {
   try {
     const order: Order = {
@@ -34,8 +29,26 @@ const create = async (req: Request, res: Response) => {
   }
 }
 
+const showOrderByUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.id;
+    const activeOrders = await orderStore.showByStatusUserId(userId, 'active');
+    const order = activeOrders[0];
+    const orderId = order.id!;
+    const orderVideoGames = await orderVideoGameStore.showByOrderId(orderId.toString());
+    
+    res.json({
+      order: order,
+      orderVideoGamesByOrderId: orderVideoGames
+    });
+  } catch(err) {
+    res.status(400);
+    res.json(err);
+  }
+}
+
 const orderRoutes = (app: express.Application) => {
-  app.get('/orders/:userId', showByUserId);
+  app.get('/orders/:id', showOrderByUser);
   app.post('/orders', create);
 }
 
