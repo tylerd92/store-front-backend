@@ -8,12 +8,6 @@ const userStore = new StoreUserStore();
 
 describe('OrderVideoGame Model', () => {
   beforeAll(async () => {
-    // const userResult = await userStore.create({
-    //   username: 'testUser3',
-    //   password: 'pa$$w0rD123',
-    //   email: 'test1@test.com'
-    // });
-
     const orderResult = await orderStore.create({
       orderStatus: 'initiated',
       userId: 2
