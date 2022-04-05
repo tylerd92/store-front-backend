@@ -3,7 +3,7 @@ import Client from '../database';
 export type OrderVideoGame = {
   id?: number;
   quantity: number;
-  orderId: number;
+  orderId?: number;
   gameId: number;
 };
 
