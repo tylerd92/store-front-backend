@@ -11,17 +11,24 @@ const create = async (req: Request, res: Response) => {
       orderStatus: 'initiated',
       userId: req.body.userId
     };
-
     const newOrder = await orderStore.create(order);
-    const orderVideoGame: OrderVideoGame = {
-      quantity: req.body.quantity,
-      orderId: newOrder.id,
-      gameId: req.body.gameId
-    };
-    const newOrderVideoGame = await orderVideoGameStore.create(orderVideoGame);
+    
+    const productList = req.body.productList; // list of products in order
+    const orderVideoGameList: OrderVideoGame[] = [];
+    let orderVideoGame: OrderVideoGame;
+    for (let i = 0; i < productList.length; i++ ) {
+       orderVideoGame = {
+        quantity: productList[i].quantity,
+        orderId: newOrder.id,
+        gameId: productList[i].gameId
+      };
+      const newOrderVideoGame = await orderVideoGameStore.create(orderVideoGame);
+      orderVideoGameList.push(newOrderVideoGame);
+    }
+    
     res.json({
       order: newOrder,
-      orderVideoGame: newOrderVideoGame
+      orderVideoGameList
     });
   } catch(err) {
     res.status(400);
@@ -32,7 +39,7 @@ const create = async (req: Request, res: Response) => {
 const showOrderByUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
-    const activeOrders = await orderStore.showByStatusUserId(userId, 'active');
+    const activeOrders = await orderStore.showByStatusUserId(userId, 'initiated');
     const order = activeOrders[0];
     const orderId = order.id!;
     const orderVideoGames = await orderVideoGameStore.showByOrderId(orderId.toString());
